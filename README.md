@@ -1,6 +1,8 @@
 # Fabric-Care CSV Validator | Sewlore
 
-An original Streamlit interface for checking anonymous before-and-after fabric-care records before calculating changes. It adds useful batch diagnostics and separate accepted-record/correction downloads to Sewlore's existing standard-library validation core. It does not repeat the geometric overlay lesson or claim a measured fabric dataset.
+[Open the public Fabric-Care CSV Validator](https://sewlore-fabric-care-validator.streamlit.app/)
+
+Check anonymous before-and-after fabric-care records before comparing their changes. This Streamlit app identifies missing readings, inconsistent units and unusable CSV rows, then offers accepted records and correction notes as separate downloads.
 
 The initial input is the supplied header with **no sample rows**. Validation runs only after the user confirms the anonymous-record restriction and presses **Validate CSV**. **Load hypothetical example** supplies three explicitly invented software rows: two accepted records and one mismatched-unit record. No fabric was washed, pressed or measured for these examples.
 
@@ -8,9 +10,9 @@ The initial input is the supplied header with **no sample rows**. Validation run
 
 CSV must be UTF-8 (optional BOM), at most **128 KiB** and **250 non-empty sample records**. Keep the ten supplied columns in order. Use anonymous codes such as `sample-001` (`sample-` plus 1–6 digits), matching `cm`, `mm` or `in` units, and four positive finite numeric readings. Allowed care-method codes are `wash`, `dry`, `wash-and-dry`, `rinse`, `steam`, `press`, or `other`; these describe what the user actually did and do not prescribe care. Keep detailed method notes in the user's own records. **Leave the notes column empty.** Use `yes` for the rectangle assumption only when both paired spans describe actual flat rectangles; otherwise use `no` or leave blank.
 
-Do not upload names, contact details, body measurements, personal identifiers, financial, health or other sensitive information. Uploaded or pasted CSV travels to the Streamlit server and is processed in memory. The application does not write user CSV to disk, use data caching, call external APIs, add analytics or print user data to logs. Session state temporarily holds the submitted result so download buttons can use it; clearing entries removes this app's result reference. This is **not browser-only processing**. Ordinary hosting-platform requests and usage statistics follow the platform's policy. The local configuration disables library usage statistics, but Community Cloud currently forces `browser.gatherUsageStats=true`; this app cannot promise zero platform telemetry.
+Do not upload names, contact details, body measurements, personal identifiers, financial, health or other sensitive information. Uploaded or pasted CSV travels to the Streamlit server and is processed in memory. The application does not write user CSV to disk, use data caching, call external APIs, add analytics or print user data to logs. Session state temporarily holds the submitted result so download buttons can use it; clearing entries removes this app's result reference. Ordinary hosting-platform requests and usage statistics follow the platform's policy. The local configuration disables library usage statistics, but Community Cloud currently forces `browser.gatherUsageStats=true`; platform telemetry remains outside the app's control.
 
-Malformed quoting, unsupported encoding or a policy/limit violation rejects the submission before calculations. A record with inconsistent columns or numerical errors is diagnosed by the unchanged calculation core. Valid records and correction notes remain separate. Changing the input hides previous results until explicit revalidation. Exports neutralize formula-like text as well as quoting CSV cells; numeric negative percentages remain numeric. Inspect spreadsheet import behaviour before relying on the exported file.
+Malformed quoting, unsupported encoding or a policy/limit violation rejects the submission before calculations. A record with inconsistent columns or numerical errors receives correction notes. Valid records and correction notes remain separate. Changing the input hides previous results until explicit revalidation. Exports neutralize formula-like text as well as quoting CSV cells; numeric negative percentages remain numeric. Inspect spreadsheet import behaviour before relying on the exported file.
 
 ## Meaning of results
 
@@ -26,21 +28,27 @@ Use Python 3.12 and the pinned Streamlit dependency:
 python -m venv .venv
 # Activate this environment using the instructions for your operating system.
 python -m pip install --index-url https://pypi.org/simple -r requirements.txt
-python -m streamlit run app.py --server.address 127.0.0.1 --server.headless true
+python -m streamlit run app.py --server.address 127.0.0.1 --server.port 8502 --server.headless true
 ```
 
-The existing prepared local environment contains Streamlit 1.65.0. No server is left running by package preparation. Run the new boundary and native app-flow checks with:
+Open [http://localhost:8502/](http://localhost:8502/) in your browser. Stop the local server with Ctrl+C.
+
+## Tests
+
+Run the boundary and native app-flow checks with:
 
 ```sh
 python -B -m unittest discover -s tests -v
 ```
 
-`validator.py` is a byte-identical copy of the original Sewlore Colab validation core, whose 22 tests already passed. These new checks target the input policy and interface; the unchanged 22-test suite is not duplicated or rerun. Streamlit's native AppTest executes the application without a browser; visual/mobile and hosted behaviour require separate browser review.
+The ten checks cover UTF-8 and byte/record limits, malformed CSV, the anonymous-record policy, rejected-identifier redaction, accepted/error separation, the blank initial state, explicit submission, hypothetical example, native upload, stale-result hiding and clearing. Streamlit's native AppTest executes the interface without a browser. Test fixtures are hypothetical software inputs, not physical fabric observations.
 
-## Public repository and deployment
+## Hosted deployment and source
 
-Only publish the source files in the manifest's public-file allowlist: `app.py`, `validator.py`, `input_policy.py`, `requirements.txt`, `.streamlit/config.toml`, `.gitignore`, `README.md`, `LICENSE.txt`, the header-only template, the labelled hypothetical demo and the two test files. Do not upload `.venv`, private manifests, validation reports or runtime data. There are no secrets, external database credentials or account SDKs in this app.
+The public app runs on Streamlit Community Cloud from the [`main` branch of gokimedia/sewlore-fabric-care-validator](https://github.com/gokimedia/sewlore-fabric-care-validator), with `app.py` as its entrypoint and Python 3.12. `requirements.txt` pins Streamlit 1.65.0. Source updates on the deployed branch trigger Community Cloud updates.
 
-Community Cloud deploys from a GitHub repository where the deploying user has admin access. Select the actual repository, branch and `app.py`, choose Python 3.12 and an available descriptive subdomain, and verify public sharing. The actual URL is not invented or embedded in this draft. This preparation does not create an account, authorize OAuth, accept Terms, push source or deploy an app. Official onboarding: [connect GitHub](https://docs.streamlit.io/deploy/streamlit-community-cloud/get-started/connect-your-github-account), [deploy](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy), and [share](https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app).
+`app.py` provides the interface, `input_policy.py` enforces the hosted input restrictions, and `validator.py` performs CSV validation, signed calculations and safe exports. The repository includes a header-only template, a labelled hypothetical demo and tests. `.streamlit/config.toml` supplies the theme and local configuration. There are no secrets, external database credentials or account SDKs in the app.
 
 Original code and educational copy © 2026 Sewlore, under the MIT licence in `LICENSE.txt`. The licence grants no trademark ownership or platform endorsement.
+
+[Sewlore](https://sewlore.com/) · Thoughtful preparation for your next sewing project.
