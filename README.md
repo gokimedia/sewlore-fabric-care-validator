@@ -51,4 +51,10 @@ The public app runs on Streamlit Community Cloud from the [`main` branch of goki
 
 Original code and educational copy © 2026 Sewlore, under the MIT licence in `LICENSE.txt`. The licence grants no trademark ownership or platform endorsement.
 
+## Citation and reproducible use
+
+`CITATION.cff` describes the software with Sewlore as the organization author; `codemeta.json` supplies machine-readable source metadata. `CHANGELOG.md` records the contents of version 1.0.0. When citing or comparing results, record the actual Git commit or published release you used rather than assuming the live app is fixed to a version. Use the software citation metadata and source repository to identify that version.
+
+For reproducible software checks, retain the source version, Python version, pinned dependency, CSV column order, unit choices and rectangle assumption. The blank template and hypothetical fixtures support learning and testing; they are not a physical measurement dataset or research results. Keep private source readings outside the repository and hosted app, and follow the anonymous-record restrictions above. Development and documentation were AI-assisted, with software checks and interface review; no laboratory study or peer review is claimed.
+
 [Sewlore](https://sewlore.com/) · Thoughtful preparation for your next sewing project.

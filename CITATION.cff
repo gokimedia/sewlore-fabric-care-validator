@@ -1,0 +1,32 @@
+{
+  "cff-version": "1.2.0",
+  "message": "If you use this software, cite the version you used and its source repository.",
+  "type": "software",
+  "title": "Fabric-Care CSV Validator | Sewlore",
+  "version": "1.0.0",
+  "date-released": "2026-10-06",
+  "authors": [
+    {
+      "name": "Sewlore",
+      "website": "https://sewlore.com/"
+    }
+  ],
+  "contact": [
+    {
+      "name": "Sewlore",
+      "website": "https://sewlore.com/"
+    }
+  ],
+  "repository-code": "https://github.com/gokimedia/sewlore-fabric-care-validator",
+  "url": "https://sewlore-fabric-care-validator.streamlit.app/",
+  "license": "MIT",
+  "abstract": "Educational software for checking anonymous paired fabric-care CSV records before calculating signed length and width contraction. The Streamlit interface reports input errors and exports accepted records and correction notes separately. Rectangular-area contraction requires an explicit rectangle assumption. The supplied template is blank and the demo and test fixtures are hypothetical software inputs, not physical measurements or research results. Development and documentation were AI-assisted, with software checks and interface review.",
+  "keywords": [
+    "sewing preparation",
+    "CSV validation",
+    "fabric care",
+    "educational software",
+    "Python",
+    "Streamlit"
+  ]
+}
