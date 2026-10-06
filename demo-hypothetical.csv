@@ -1,0 +1,4 @@
+sample_id,before_unit,after_unit,before_length,before_width,after_length,after_width,care_method,rectangle_assumption,notes
+sample-001,cm,cm,20,20,19,19.5,wash-and-dry,yes,
+sample-002,cm,mm,20,20,190,195,wash,no,
+sample-003,cm,cm,20,20,21,20,press,no,

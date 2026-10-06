@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+package-manifest.json
+validation-report.json
+sewlore-streamlit-care-validator-source.zip
